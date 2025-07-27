@@ -1,0 +1,19 @@
+
+.scheme-toggle {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: var(--space-1);
+  border-radius: var(--border-radius-base);
+  cursor: pointer;
+  width: max-content;
+
+  &-icons {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-1);
+  }
+}

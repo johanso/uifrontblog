@@ -1,0 +1,47 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+
+  &__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__menu-icon {
+    margin-left: auto;
+
+    @media (min-width: 48rem) {
+      display: none;
+    }
+  }
+
+  &__mobile {
+    background-color: var(--background);
+    box-shadow: var(--box-shadow-base);
+    padding: var(--space-3) 0;
+    position: sticky;
+    top: 0;
+    width: 100%;
+    margin-bottom: var(--space-8);
+    z-index: 1;
+    @media (min-width: 48rem) {
+      display: none;
+    }
+  }
+
+  &__desktop {
+    display: none;
+    @media (min-width: 48rem) {
+      display: block;
+    }
+  }
+
+  &__desktop-toogle-dark {
+   position: fixed;
+   top: var(--space-2);
+   right: var(--space-2);
+   z-index: 1; 
+  }
+}

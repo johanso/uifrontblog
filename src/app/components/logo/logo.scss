@@ -1,0 +1,29 @@
+
+.logo-wrapper {
+	display: flex;
+	align-items: center;
+	gap: var(--space-2);
+
+  a {
+    display: flex;
+    align-items: center;
+  }
+
+	.logo-svg {
+		width: 1.8rem;
+		height: 1.8rem;
+    @media (min-width: 48rem) {
+      width: 2rem;
+      height: 2rem;
+    }
+	}
+
+	.logo-text {
+		font-family: var(--font-space-grotesk);
+		font-weight: var(--fw-semibold);
+		font-size: 1rem;
+		line-height: var(--lh-base);
+		color: var(--color-text);
+    letter-spacing: .05rem;
+	}
+}

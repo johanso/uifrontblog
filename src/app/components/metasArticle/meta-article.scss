@@ -1,0 +1,54 @@
+.meta-article {
+  font-size: var(--fs-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-top: 1px solid var(--color-border);
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--space-1-5);
+  padding-block: var(--space-1-5);
+
+  @media (min-width: 48rem) {
+    font-size: var(--fs-xs);
+    justify-content: flex-start;
+    gap: var(--space-2);
+  }
+
+  &__category {
+    font-size: var(--fs-sm);
+    font-weight: var(--fw-medium);
+    @media (min-width: 48rem) {
+      font-size: var(--fs-xs);
+    }
+  }
+
+  &__author {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  
+    &-image {
+      display: none;
+      width: var(--space-6);
+      height: var(--space-6);
+      border-radius: var(--border-radius-full);
+      overflow: hidden;
+      object-fit: cover;
+
+      @media (min-width: 48rem) {
+        display: block;
+      }
+    }
+  
+    .author-name {
+      font-size: var(--fs-sm);
+      font-weight: var(--fw-regular);
+      letter-spacing: .01rem;
+      margin: 0;
+      @media (min-width: 48rem) {
+        font-size: var(--fs-xs);
+      }
+    }
+  
+  }
+}

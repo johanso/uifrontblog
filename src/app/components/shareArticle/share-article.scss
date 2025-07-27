@@ -1,0 +1,12 @@
+
+.share-article {
+  display: flex;
+  line-height: 0;
+  align-items: center;
+  gap: var(--space-4);
+
+  &__content {
+    display: flex;
+    gap: var(--space-6);
+  }
+}

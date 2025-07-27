@@ -2,25 +2,283 @@
 
 :root {
   --background: #ffffff;
-  --foreground: #171717;
+  --foreground: #222222;
+
+  --color-primary: #FE7743;
+  --color-primary-hover: #e5653a;
+  --color-primary-active: #cc5530;
+  
+  --color-secondary: #273F4F;
+  --color-secondary-hover: #1e2f3c;
+  --color-secondary-active: #152329;
+  
+  --color-tertiary: #f6f6f6;
+  --color-tertiary-hover: #e8e8e8;
+  --color-tertiary-active: #dadada;
+  
+  --color-alternate: #EFEEEA;
+  --color-alternate-hover: #e1dfd8;
+  --color-alternate-active: #d3cfc6;
+
+  --color-text: #222222;
+  --color-text-muted: #5f646e;
+  --color-text-light: #9ca3af;
+  --color-border: #ececec;
+  --color-gray-8d: #8d8d8d;
+
+  /* Colores de superficie */
+  --color-surface: #ffffff;
+  --color-surface-hover: #f9fafb;
+  --color-surface-active: #f3f4f6;
+  --color-card: #ffffff;
+  
+  /* Estados */
+  --color-success: #10b981;
+  --color-success-hover: #059669;
+  --color-success-active: #047857;
+  
+  --color-warning: #f59e0b;
+  --color-warning-hover: #d97706;
+  --color-warning-active: #b45309;
+  
+  --color-error: #ef4444;
+  --color-error-hover: #dc2626;
+  --color-error-active: #b91c1c;
+  
+  --color-info: #3b82f6;
+  --color-info-hover: #2563eb;
+  --color-info-active: #1d4ed8;
+
+  /* Colores técnicos */
+  --color-html: #E34F26;
+  --color-css: #1572B6;
+  --color-javascript: #F7DF1E;
+  --color-ux-ui: #8B5CF6;
+
+  /* === TIPOGRAFÍA === */
+
+  /* Pesos */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  /* Line-heights */
+  --lh-tight: 1.25;
+  --lh-snug: 1.375;
+  --lh-normal: 1.5;
+  --lh-base: 1.6;
+  --lh-relaxed: 1.75;
+
+  /* Tamaños de fuente fluidos */
+  --fs-xs: clamp(0.65rem, 0.7rem + 0.25vw, 0.75rem);     /* 12-14px */
+  --fs-sm: clamp(0.875rem, 0.8rem + 0.375vw, .875rem);   /* 14-16px */
+  --fs-base: clamp(1rem, 0.9rem + 0.5vw, 1rem);           /* 16-18px */
+  --fs-lg: clamp(1.125rem, 1rem + 0.625vw, 1.25rem);      /* 18-20px */
+  --fs-xl: clamp(1.25rem, 1.1rem + 0.75vw, 1.5rem);       /* 20-24px */
+  --fs-2xl: clamp(1.5rem, 1.3rem + 1vw, 1.875rem);        /* 24-30px */
+  --fs-3xl: clamp(1.875rem, 1.6rem + 1.375vw, 2.25rem);   /* 30-36px */
+  --fs-4xl: clamp(2.25rem, 1.9rem + 1.75vw, 3rem);        /* 36-48px */
+  --fs-5xl: clamp(3rem, 2.5rem + 2.5vw, 4rem);            /* 48-64px */
+
+  /* === ESPACIADO === */
+  /* Espacios micro */
+  --space-px: 1px;
+  --space-0-5: 0.125rem;   /* 2px */
+  --space-1: 0.25rem;      /* 4px */
+  --space-1-5: 0.375rem;   /* 6px */
+  --space-2: 0.5rem;       /* 8px */
+  --space-2-5: 0.625rem;   /* 10px */
+  --space-3: 0.75rem;      /* 12px */
+  --space-3-5: 0.875rem;   /* 14px */
+  --space-4: 1rem;         /* 16px */
+  --space-5: 1.25rem;      /* 20px */
+  --space-6: 1.5rem;       /* 24px */
+  --space-7: 1.75rem;      /* 28px */
+  --space-8: 2rem;         /* 32px */
+  --space-9: 2.25rem;      /* 36px */
+  --space-10: 2.5rem;      /* 40px */
+  --space-11: 2.75rem;     /* 44px */
+  --space-12: 3rem;        /* 48px */
+  --space-14: 3.5rem;      /* 56px */
+  --space-16: 4rem;        /* 64px */
+  --space-20: 5rem;        /* 80px */
+  --space-24: 6rem;        /* 96px */
+  --space-28: 7rem;        /* 112px */
+  --space-32: 8rem;        /* 128px */
+  --space-36: 9rem;        /* 144px */
+  --space-40: 10rem;       /* 160px */
+
+  /* === SOMBRAS === */
+  --box-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --box-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+  --box-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+  --box-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
+  --box-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  --box-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --box-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --box-shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+  --box-shadow-short: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  --border-radius-sm: 0.125rem;
+  --border-radius-base: 0.25rem;
+  --border-radius-md: 0.375rem;
+  --border-radius-lg: 0.5rem;
+  --border-radius-xl: 0.75rem;
+  --border-radius-full: 9999px;
+
+  /* Tipografía fluida en html: clampa entre 14px y 18px según viewport */
+  --fs-base-min: 1rem;   /* 14px */
+  --fs-base-max: 1.125rem;   /* 18px */
+  --transition-all: all 200ms ease;
+
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-   );
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f1f5f9;
+
+  --color-primary-hover: #ff8759;
+  --color-primary-active: #e5653a;
+  
+  --color-secondary: #334155;
+  --color-secondary-hover: #475569;
+  --color-secondary-active: #64748b;
+  
+  --color-tertiary: #1e293b;
+  --color-tertiary-hover: #334155;
+  --color-tertiary-active: #475569;
+  
+  --color-alternate: #292524;
+  --color-alternate-hover: #3c2f2a;
+  --color-alternate-active: #4c3831;
+
+  --color-text: #f1f5f9;
+  --color-text-muted: #abb4c0;
+  --color-text-light: #64748b;
+  --color-border: #334155;
+  --color-gray-8d: #64748b;
+
+  /* Colores de superficie */
+  --color-surface: #1e293b;
+  --color-surface-hover: #334155;
+  --color-surface-active: #475569;
+  --color-card: #1e293b;
+  
+  /* Estados ajustados para dark mode */
+  --color-success: #22c55e;
+  --color-warning: #fbbf24;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+
+  /* Sombras para dark mode */
+  --box-shadow-xs: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+  --box-shadow-sm: 0 1px 3px 0 rgba(0, 0, 0, 0.4), 0 1px 2px -1px rgba(0, 0, 0, 0.4);
+  --box-shadow-base: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -2px rgba(0, 0, 0, 0.4);
+  --box-shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -4px rgba(0, 0, 0, 0.4);
+  --box-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+  --box-shadow-xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  --box-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
+    --color-text: #ededed;
   }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-size: clamp(
+    var(--fs-base-min),
+    calc(1vw + 0.5rem),
+    var(--fs-base-max)
+  );
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-cabin);
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  &.no-scroll {
+    overflow: hidden;
+  }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-space-grotesk);
+  font-weight: var(--fw-bold);
+}
+
+/* 3. Tipografía: headings fluidos con clamp() */
+h1 {
+  line-height: var(--lh-tight);
+  font-size: clamp(1.6rem, 3vw + 1rem, 2rem);
+  margin-bottom: calc(var(--space-2) + var(--space-05));
+}
+h2 {
+  line-height: var(--lh-tight);
+  font-size: clamp(1.5rem, 2.75vw + 0.7rem, 1.7rem);
+  margin-bottom: var(--space-4);
+}
+h3 {
+  line-height: var(--lh-tight);
+  font-size: clamp(1.25rem, 2.25vw + 0.5rem, 1.5rem);
+  margin-bottom: var(--space-4);
+}
+h4 {
+  line-height: var(--lh-tight);
+  font-size: clamp(1rem, 2vw + 0.25rem, 1.5rem);
+  margin-bottom: var(--space-4);
+}
+h5 {
+  line-height: var(--lh-tight);
+  font-size: clamp(1rem, 1.5vw + 0.5rem, 1rem);
+  margin-bottom: var(--space-1);
+}
+h6 {
+  line-height: var(--lh-tight);
+  font-size: clamp(0.875rem, 1vw + 0.25rem, 1rem);
+}
+
+p {
+  line-height: var(--lh-base);
+  font-size: var(--fs-base-min);
+  margin-bottom: var(--space-4);
+}
+
+p code {
+  background-color: rgba(0, 0, 0, 0.04);
+  padding: 0 var(--space-2);
+  font-family: var(--font-fira-code);
+}
+
+ul {
+  list-style-type: none;
+  margin-bottom: var(--space-4);
+}
+
+ul li {
+  margin-bottom: var(--space-2);
+}
+
+.container {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 var(--space-4);  
 }

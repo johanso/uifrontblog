@@ -1,0 +1,63 @@
+
+.wp-block-js-snippets-code-block {
+
+  --bg-color: var(--color-surface-hover);
+
+  margin-bottom:var(--space-6);
+  background: var(--bg-color);
+  border-radius: var(--border-radius-base);
+
+  .js-snippet-code {
+    background: var(--bg-color);
+    font-size: var(--fs-sm);
+    font-family: var(--font-fira-code);
+    padding: var(--space-2);
+    border-radius: var(--border-radius-base);
+    code, kbd, samp, pre {
+      font-family: var(--font-fira-code);
+      font-size: var(--fs-xs);
+      line-height: var(--lh-base);
+    }
+  }
+  .js-snippet-footer {
+    display: none;
+  }
+
+  .js-snippet-header {
+    background: var(--color-surface-active);
+    display: flex;
+    justify-content: space-between;
+    padding-inline: var(--space-2);
+    padding-block: var(--space-1-5);
+    border-radius: var(--border-radius-base);
+    margin-bottom: var(--space-2);
+  }
+
+  .js-snippet-language {
+    font-size: var(--fs-sm);
+    color: var(--color-text);
+    @media (min-width: 48rem) {
+      font-size: var(--fs-xs);
+    }
+  }
+
+  .js-snippet-copy svg {
+    width: var(--space-4);
+    height: var(--space-4);
+  } 
+
+  .hljs {
+    background: var(--bg-color);
+    padding: var(--space-2);
+    font-size: var(--fs-xs);
+    font-family: var(--font-fira-code);
+    color: var(--color-text-muted);
+
+    * {
+      color: var(--color-text-muted);
+      font-weight: var(--fw-regular);
+      background: transparent;
+    }
+  }
+}
+
