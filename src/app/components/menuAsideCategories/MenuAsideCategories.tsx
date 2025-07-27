@@ -1,11 +1,16 @@
 import { WPTerm } from '@/app/types/wp'
 import React from 'react'
 import Link from 'next/link'
-import './menu-aside-categories.scss'
 import Logo from '../logo/Logo'
-import SocialBlog from '../socialBlog/SocialBlog'
+import './menu-aside-categories.scss'
 
-const MenuAsideCategories = ({ categories, logo }: { categories: WPTerm[]; logo?: boolean }) => {
+interface Props {
+  categories: WPTerm[];
+  logo?: boolean;
+  activeCategory?: string;
+}
+
+const MenuAsideCategories = ({ categories, logo, activeCategory }: Props) => {
   return (
     <div className='menu-aside-categories'>
 
@@ -25,7 +30,7 @@ const MenuAsideCategories = ({ categories, logo }: { categories: WPTerm[]; logo?
                 <Link 
                   href={`/${category.slug}`}
                 className={
-                `menu-aside-categories__item-link menu-aside-categories__item-link--${category.slug}`
+                `menu-aside-categories__item-link menu-aside-categories__item-link--${category.slug} ${activeCategory?.toLowerCase() === category.slug ? 'active' : ''}`
                 }
                 >{category.name}</Link>
               )

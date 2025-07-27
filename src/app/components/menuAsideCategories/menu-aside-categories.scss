@@ -36,26 +36,44 @@
         color: var(--background);
         box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-html);
       }
+      &.active {
+        box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-html);
+        color: var(--background);
+      }
     }
+    
     &--css {
       box-shadow: inset var(--space-2) 0 var(--color-css);
       &:hover {
         color: var(--background);
         box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-css);
       }
+      &.active {
+        box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-css);
+        color: var(--background);
+      }
     }
+
     &--javascript {
       box-shadow: inset var(--space-2) 0 var(--color-javascript);
       &:hover {
-        color: var(--background);
+        color: #000;
+        box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-javascript);
+      }
+      &.active {
         box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-javascript);
       }
     }
+
     &--ux-ui {
       box-shadow: inset var(--space-2) 0 var(--color-ux-ui);
       &:hover {
         color: var(--background);
         box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-ux-ui);
+      }
+      &.active {
+        box-shadow: inset calc(var(--space-40) + var(--space-40)) 0 var(--color-ux-ui);
+        color: var(--background);
       }
     }
   }

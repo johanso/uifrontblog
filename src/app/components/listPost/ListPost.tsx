@@ -49,9 +49,9 @@ export default function ListPost({ initialPosts, initialPage, perPage, filter }:
                       <Link
                         key={cat.id}
                         href={`/${cat.slug}`}
-                        className="post-list__category"
+                        className={`post-list__category post-list__category--${cat.slug}`}
                       >
-                        {cat.name}{i < categories.length - 1 ? ', ' : ''}
+                        {cat.name.toLowerCase().replace(/\b\w/g, l => l.toUpperCase())}
                       </Link>
                     ))}
                   </p>

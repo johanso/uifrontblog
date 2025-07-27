@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, Fira_Code } from "next/font/google";
-import "./globals.css";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import TopLoader from "nextjs-toploader";
+import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -35,7 +36,13 @@ export default function RootLayout({
         className={`${spaceGrotesk.variable} ${inter.variable} ${firaCode.variable} antialiased`}
       >
         <Header />
-        {children}
+        <TopLoader 
+          color="var(--color-primary)"
+          showSpinner={false}
+        />
+        <main className="container">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>

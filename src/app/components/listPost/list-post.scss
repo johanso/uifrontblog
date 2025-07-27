@@ -67,7 +67,35 @@
   &__categories {
     margin-bottom: 0;
     font-size: var(--fs-xs);
-    color: var(--color-gray-8d);
+    gap: var(--space-1-5);
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__category {
+    padding: var(--space-0-5) var(--space-1-5);
+    border-radius: var(--border-radius-base);
+    display: inline-block;
+    font-size: var(--fs-xs);
+    line-height: var(--lh-tight);
+    font-weight: var(--fw-regular);
+
+    &--javascript {
+      background-color: var(--color-javascript);
+      color: #000;
+    }
+    &--css {
+      background-color: var(--color-css);
+      color: #FFF;
+    }
+    &--html {
+      background-color: var(--color-html);
+      color: #FFF;
+    }
+    &--ux-ui {
+      background-color: var(--color-ux-ui);
+      color: #FFF;
+    }
   }
 
   &__meta {
@@ -78,6 +106,7 @@
 
     @media (min-width: 48rem) {
       gap: var(--space-4);
+      margin-bottom: var(--space-0-5);
     }
   }
 }

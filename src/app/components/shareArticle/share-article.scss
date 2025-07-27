@@ -9,4 +9,21 @@
     display: flex;
     gap: var(--space-6);
   }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition-all);
+    &:hover {
+      opacity: .8;
+    }
+  }
+
+  &__toast {
+    font-size: var(--fs-xs);
+    font-weight: var(--fw-semibold);
+    transition: var(--transition-all);
+  }
 }

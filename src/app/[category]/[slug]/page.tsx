@@ -14,6 +14,7 @@ import Logo from '../../components/logo/Logo';
 
 import { extractTerms } from '../../helpers/extractTerms';
 import Tags from '../../components/tags/Tags';
+import Breadcrumb from '@/app/components/breadcrumb/Breadcrumb';
 
 
 export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
@@ -40,47 +41,47 @@ export default async function PostPage({ params }: Props) {
   const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
 
   return (
-    <main className="container">
-      <article className="article">
-        <header className="article__header">
-          <h1 className="article__title" dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
-          
-          <div className="article__meta">
-            <MetasArticle
-              categories={categories}
-              authorName={authorName}
-              post={post}
-            />
-          </div>
-        </header>
+    <article className="article">
+      <header className="article__header">
+        <Breadcrumb />
 
-        {/* Contenido image destacada */}
-        <div className="article__featured-image">
-          <Image
-            src={featuredMedia?.source_url || '/images/default.jpg'}
-            alt={featuredMedia?.alt_text || post.title.rendered}
-            width={featuredMedia?.media_details?.width || 100}
-            height={featuredMedia?.media_details?.height || 100}
-            className="image"
-            priority
+        <h1 className="article__title" dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+        
+        <div className="article__meta">
+          <MetasArticle
+            categories={categories}
+            authorName={authorName}
+            post={post}
           />
         </div>
+      </header>
 
-        <section className="article__content prose" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-        <CodeHighlighterClient />
+      {/* Contenido image destacada */}
+      <div className="article__featured-image">
+        <Image
+          src={featuredMedia?.source_url || '/images/default.jpg'}
+          alt={featuredMedia?.alt_text || post.title.rendered}
+          width={featuredMedia?.media_details?.width || 100}
+          height={featuredMedia?.media_details?.height || 100}
+          className="image"
+          priority
+        />
+      </div>
 
-        <div className="article__meta-share">
-          <Tags tags={tags} />
-          <ShareArticle />
+      <section className="article__content prose" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
+      <CodeHighlighterClient />
+
+      <div className="article__meta-share">
+        <Tags tags={tags} />
+        <ShareArticle />
+      </div>
+
+      <aside className="article__aside">
+        <div className="article__aside-logo">
+          <Logo />
         </div>
-
-        <aside className="article__aside">
-          <div className="article__aside-logo">
-            <Logo />
-          </div>
-          <TableOfContent />
-        </aside>
-      </article>
-    </main>
+        <TableOfContent />
+      </aside>
+    </article>
   );
 }

@@ -11,9 +11,9 @@ const Tags = ({ tags }: { tags: WPTerm[] }) => {
         <TagsIcon width={16} height={16} fill="currentColor" />
       </span>
       {tags.map(({name, slug}, index) => (
-        <Link href={`/${slug}`} key={index} className="tags__tag">
+        <span key={index} className="tags__tag">
          {name}
-        </Link>
+        </span>
       ))}
     </div>
   )

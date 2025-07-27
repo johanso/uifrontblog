@@ -7,16 +7,17 @@ import MenuAsideCategories from '../components/menuAsideCategories/MenuAsideCate
 
 export const revalidate = 60;
 
-interface Params { params: { category: string } }
+interface Params { params: Promise<{ category: string }> }
 
 // Pre-render de todas las categorías
-export async function generateStaticParams(): Promise<Params['params'][]> {
+export async function generateStaticParams() {
   const cats = await getCategories();
   return cats.map(c => ({ category: c.slug }));
 }
 
 export default async function CategoryPage({ params }: Params) {
-  const { category: slug } = params;
+  const { category: slug } = await params;
+
   const cat = await getCategoryBySlug(slug);
   if (!cat) return notFound();
 
@@ -26,33 +27,22 @@ export default async function CategoryPage({ params }: Params) {
   const categories   = await getCategories();
 
   return (
-    <main className="container">
-      <div className="page page--right-aside">
-        <aside className="page__aside">
-          <MenuAsideCategories 
-            logo={true}
-            categories={categories}
-          />
-        </aside>
-        <div className="page__content">
-          <ListPost 
-            initialPosts={posts}
-            perPage={perPage}
-            initialPage={initialPage}
-            filter={{ categoryId: cat.id }}
-          />
-        </div>
+    <div className="page page--right-aside">
+      <aside className="page__aside">
+        <MenuAsideCategories 
+          logo={true}
+          categories={categories}
+          activeCategory={cat.slug}
+        />
+      </aside>
+      <div className="page__content">
+        <ListPost 
+          initialPosts={posts}
+          perPage={perPage}
+          initialPage={initialPage}
+          filter={{ categoryId: cat.id }}
+        />
       </div>
-    </main>
-    // <main className="container">
-    //   <h1>Categoría: {cat.name}</h1>
-    //   <ListPost
-    //     initialPosts={posts}
-    //     initialPage={initialPage}
-    //     perPage={perPage}
-    //     // Si quisieras que loadMore filtre por categoryId:
-    //     filter={{ categoryId: cat.id }}
-    //   />
-    // </main>
+    </div>
   );
 }
