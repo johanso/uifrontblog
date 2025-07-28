@@ -1,30 +1,48 @@
-import Image from 'next/image'
 import React from 'react'
+import Image from 'next/image'
+import Link from 'next/link';
+import { WPPost } from '@/app/types/wp'
 import './card-article.scss'
+import { useSimpleDate } from '@/app/hooks/useFormatDate';
+import { extractTerms } from '@/app/helpers/extractTerms';
+
+interface Props {
+  post: WPPost;
+  categorySlug: string;
+}
 
 const CardArticle = (
   {
-    textCount = 100
-  }: {
-    textCount?: number
-  }
+    post,
+    categorySlug
+  }: Props
 ) => {
+
+    const { authorName, categories } = extractTerms(post);
+  
+
   return (
-    <article>
-      <div className="card-article">
-        <div className="card-article__image">
+    <article className="card-article">
+      <div className="card-article__image">
+        <Link href={`/${categorySlug}/${post.slug}`}>
           <Image
-            src="https://img.freepik.com/free-psd/3d-illustration-person-with-sunglasses_23-2149436188.jpg"
-            alt=""
+            src={post._embedded?.['wp:featuredmedia']?.[0]?.source_url || ''}
+            alt={post._embedded?.['wp:featuredmedia']?.[0]?.alt_text || ''}
             width={200}
-            height={200}
+            height={200}  
             className="image"
             priority
           />
-        </div>
-        <div className="card-article__content">
-          <h3>Card Article</h3>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+        </Link>
+      </div>
+      <div className="card-article__content">
+        <Link href={`/${categorySlug}/${post.slug}`}>
+          <h3 className="card-article__title" dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
+        </Link>
+        <div className="card-article__meta">
+          <span className="card-article__date">{useSimpleDate(post.date)}</span>
+          <span>&#8226;</span>
+          <span className="card-article__category">{categories[0].name}</span>
         </div>
       </div>
     </article>

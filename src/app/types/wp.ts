@@ -35,6 +35,7 @@ export interface WPTerm {
   id: number;
   name: string;
   slug: string;
+  description: string;
   taxonomy: 'category' | 'post_tag';
 }
 

@@ -52,16 +52,13 @@ export async function getPosts({
 /**
  * Obtiene un post por slug, con media, autor y términos embebidos
  */
-export async function getPostBySlug(
-  slug: string
-): Promise<WPPost | null> {
+export async function getPostBySlug(slug: string): Promise<WPPost | null> {
   const posts = await wpFetch<WPPost[]>('posts', {
     slug,
     _embed: 'wp:featuredmedia,author,wp:term',
   });
   return posts[0] ?? null;
 }
-
 
 /**
  * Lista todos los tags
@@ -78,7 +75,6 @@ export async function getTags(): Promise<WPTerm[]> {
 export async function getAuthor(id: number): Promise<WPAuthor> {
   return wpFetch<WPAuthor>(`users/${id}`);
 }
-
 
 /**
  * Lista todas las categorías
@@ -124,4 +120,46 @@ export async function getPostBySlugAndCategory(
     _embed:     'wp:featuredmedia,wp:term,author',
   });
   return posts[0] ?? null;
+}
+
+/** Extrae el site name y tagline desde el root endpoint */
+export async function getSiteMeta(): Promise<{
+  name: string;
+  description: string;
+  url: string;
+  home: string;
+}> {
+  const res = await fetch(`${WP_URL}/wp-json`);
+  if (!res.ok) throw new Error('No se pudo cargar site meta de WP');
+  const data = await res.json();
+  return {
+    name:        data.name,
+    description: data.description,
+    url:         data.url,
+    home:        data.home,
+  };
+}
+
+/**
+ * Obtiene lista de posts relacionados por categoría, excluyendo el post actual
+ */
+export async function getRelatedPostsByCategory({
+  categoryId,
+  excludePostId,
+  per_page = 3,
+}: {
+  categoryId: number;
+  excludePostId: number;
+  per_page?: number;
+}): Promise<WPPost[]> {
+  // Pedimos un poco más para luego filtrar
+  const posts = await wpFetch<WPPost[]>('posts', {
+    categories: String(categoryId),
+    per_page:   String(per_page + 1),
+    _embed:     'wp:featuredmedia,wp:term',
+  });
+  // Excluimos el post actual y cortamos al tamaño deseado
+  return posts
+    .filter((p) => p.id !== excludePostId)
+    .slice(0, per_page);
 }

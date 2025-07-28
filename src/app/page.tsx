@@ -1,11 +1,32 @@
+import type { Metadata } from 'next';
 import { getCategories, getPosts } from './lib/wp';
 import { WPPost } from './types/wp';
 import ListPost from './components/listPost/ListPost';
 import MenuAsideCategories from './components/menuAsideCategories/MenuAsideCategories';
+import { siteConfig } from '@/config/site';
 import './page.scss'
 
 export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
 
+export function generateMetadata(): Metadata {
+  const { siteUrl, title, description } = siteConfig;
+  return {
+    title,
+    description,
+    alternates: { canonical: siteUrl },
+    openGraph: {
+      title,
+      description,
+      url: siteUrl,
+      siteName: title,
+    },
+    twitter: {
+      card: 'summary',
+      title,
+      description,
+    },
+  };
+}
 export default async function BlogPage() {
 
   const initialPage   = 1;

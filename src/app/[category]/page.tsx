@@ -4,8 +4,10 @@ import { WPPost } from '../types/wp';
 import ListPost from '../components/listPost/ListPost';
 import { getCategories, getCategoryBySlug, getPostsByCategory } from '../lib/wp';
 import MenuAsideCategories from '../components/menuAsideCategories/MenuAsideCategories';
+import { siteConfig } from '@/config/site';
+import { Metadata } from 'next';
 
-export const revalidate = 60;
+export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
 
 interface Params { params: Promise<{ category: string }> }
 
@@ -13,6 +15,39 @@ interface Params { params: Promise<{ category: string }> }
 export async function generateStaticParams() {
   const cats = await getCategories();
   return cats.map(c => ({ category: c.slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { category: string };
+}): Promise<Metadata> {
+  const cat = await getCategoryBySlug(params.category);
+  if (!cat) {
+    return {
+      title: 'Categoría no encontrada',
+      description: siteConfig.description,
+    };
+  }
+  const baseTitle = siteConfig.title;
+  const url = `${siteConfig.siteUrl}/${cat.slug}`;
+
+  return {
+    title: `${cat.name} – ${baseTitle}`,
+    description: cat.description || siteConfig.description,
+    alternates: { canonical: url },
+    openGraph: {
+      title: `${cat.name} – ${baseTitle}`,
+      description: cat.description,
+      url,
+      siteName: baseTitle,
+    },
+    twitter: {
+      card: 'summary',
+      title: cat.name,
+      description: cat.description,
+    },
+  };
 }
 
 export default async function CategoryPage({ params }: Params) {
