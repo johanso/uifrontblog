@@ -15,8 +15,13 @@
     border-radius: var(--border-radius-base);
     code, kbd, samp, pre {
       font-family: var(--font-fira-code);
-      font-size: var(--fs-xs);
+      font-size: .78rem;
       line-height: var(--lh-base);
+      overflow-x: auto;
+    }
+    pre[class^="language-"] {
+      padding-inline: var(--space-3);
+      padding-block: var(--space-1);
     }
   }
   .js-snippet-footer {
@@ -24,20 +29,25 @@
   }
 
   .js-snippet-header {
-    background: var(--color-surface-active);
     display: flex;
     justify-content: space-between;
-    padding-inline: var(--space-2);
-    padding-block: var(--space-1-5);
-    border-radius: var(--border-radius-base);
+    padding: var(--space-1) var(--space-1-5) var(--space-2-5);
     margin-bottom: var(--space-2);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .js-snippet-language {
-    font-size: var(--fs-sm);
-    color: var(--color-text);
+    font-size: .725rem;
+    background: var(--foreground);
+    padding: var(--space-0-5) var(--space-2-5);
+    border-radius: var(--border-radius-full);
+    color: var(--background);
+    &::before {
+      content: "<>";
+      letter-spacing: 1px;
+      margin-right: var(--space-0-5);
+    }
     @media (min-width: 48rem) {
-      font-size: var(--fs-xs);
     }
   }
 

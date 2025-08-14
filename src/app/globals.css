@@ -130,7 +130,7 @@
   --border-radius-full: 9999px;
 
   /* Tipografía fluida en html: clampa entre 14px y 18px según viewport */
-  --fs-base-min: 1rem;   /* 14px */
+  --fs-base-min: 1.05rem;   /* 14px */
   --fs-base-max: 1.125rem;   /* 18px */
   --transition-all: all 200ms ease;
 
