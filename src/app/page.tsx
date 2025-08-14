@@ -30,7 +30,7 @@ export function generateMetadata(): Metadata {
 export default async function BlogPage() {
 
   const initialPage   = 1;
-  const perPage       = 3;
+  const perPage       = 10;
   const posts: WPPost[]   = await getPosts({ page: initialPage, per_page: perPage });
   const categories   = await getCategories();
 

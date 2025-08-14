@@ -3,8 +3,8 @@ import Image from 'next/image'
 import Link from 'next/link';
 import { WPPost } from '@/app/types/wp'
 import './card-article.scss'
-import { useSimpleDate } from '@/app/hooks/useFormatDate';
 import { extractTerms } from '@/app/helpers/extractTerms';
+import { formatDateES } from '@/lib/date';
 
 interface Props {
   post: WPPost;
@@ -40,7 +40,7 @@ const CardArticle = (
           <h3 className="card-article__title" dangerouslySetInnerHTML={{ __html: post.title.rendered }} />
         </Link>
         <div className="card-article__meta">
-          <span className="card-article__date">{useSimpleDate(post.date)}</span>
+          <span className="card-article__date">{formatDateES(post.date)}</span>
           <span>&#8226;</span>
           <span className="card-article__category">{categories[0].name}</span>
         </div>

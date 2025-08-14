@@ -198,7 +198,6 @@
 }
 
 html {
-  scroll-behavior: smooth;
   font-size: clamp(
     var(--fs-base-min),
     calc(1vw + 0.5rem),

@@ -1,10 +1,10 @@
 'use client';
 import React from 'react'
 import './meta-article.scss'
-import { useSimpleDate } from '@/app/hooks/useFormatDate';
 import Image from 'next/image';
 import { WPPost, WPTerm } from '@/app/types/wp';
 import Link from 'next/link';
+import { formatDateES } from '@/lib/date';
 
 const MetasArticle = (
   {
@@ -40,7 +40,7 @@ const MetasArticle = (
         <Link href={`/${slug}`}>{name}</Link>
       </span> 
       <span>&#8226;</span>
-      <span className='meta-article__date'>{useSimpleDate(post.date)}</span>
+      <span className='meta-article__date'>{formatDateES(post.date)}</span>
     </div>
   )
 }

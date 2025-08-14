@@ -6,7 +6,7 @@ const useDarkMode = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   // Función para aplicar el tema
-  const applyTheme = (dark: any) => {
+  const applyTheme = (dark: boolean | ((prevState: boolean) => boolean)) => {
     const root = document.documentElement;
     if (dark) {
       root.classList.add('dark');

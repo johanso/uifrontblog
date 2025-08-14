@@ -5,7 +5,6 @@ import Footer from "./components/footer/Footer";
 import TopLoader from "nextjs-toploader";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
-import Head from "next/head";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -63,7 +62,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang={siteConfig.locale}>
+    <html lang={siteConfig.locale} data-scroll-behavior="smooth">
       <body
         className={`${spaceGrotesk.variable} ${inter.variable} ${firaCode.variable} antialiased`}
       >

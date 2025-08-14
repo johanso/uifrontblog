@@ -2,12 +2,12 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Script from 'next/script';
 import { notFound } from 'next/navigation';
-import { getCategoryBySlug, getPostBySlug, getPosts, getRelatedPostsByCategory } from '../../lib/wp';
+import parse, { HTMLReactParserOptions } from 'html-react-parser';
+import { getPostBySlug, getPosts, getRelatedPostsByCategory } from '../../lib/wp';
 import { WPPost } from '../../types/wp';
 import MetasArticle from '../../components/metasArticle/MetasArticle';
 import ShareArticle from '../../components/shareArticle/ShareArticle';
 import TableOfContent from '../../components/tableContents/TableOfContent';
-import CodeHighlighterClient from '../../components/codeHighlighter/CodeHighlighterClient';
 import Logo from '../../components/logo/Logo';
 import { extractTerms } from '../../helpers/extractTerms';
 import Tags from '../../components/tags/Tags';
@@ -26,7 +26,15 @@ export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
  */
 export async function generateStaticParams() {
   const posts = await getPosts({ per_page: 100 });
-  return posts.map((p) => ({ slug: p.slug }));
+  return posts.flatMap(post => {
+    const { categories } = extractTerms(post);
+    if (categories.length === 0) return [];
+    const primaryCategory = categories[0];
+    return {
+      category: primaryCategory.slug,
+      slug: post.slug,
+    };
+  });
 }
 
 /**
@@ -35,17 +43,18 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
+
+  const { slug } = await params;
+  const post = await getPostBySlug(slug);
+
   if (!post) {
     return {
       title: 'Artículo no encontrado',
-      description: 'Este artículo no existe o ha sido movido.',
     };
   }
 
-  // Limpia el excerpt de etiquetas HTML y limita a 155 chars
   const cleanDescription = post.excerpt.rendered
     .replace(/<[^>]+>/g, '')
     .trim()
@@ -58,7 +67,7 @@ export async function generateMetadata({
   // Extrae categorías y tags
   const { categories, tags } = extractTerms(post);
   const categorySlug = categories[0]?.slug;
-  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/${categorySlug}/${post.slug}`;
+  const canonicalUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/${categorySlug}/${post.slug}`
 
   return {
     title: post.title.rendered,
@@ -104,28 +113,61 @@ interface Props {
 export default async function PostPage({ params }: Props) {
 
   const { category: catSlug, slug: postSlug } = await params;
-  const cat = await getCategoryBySlug(catSlug);
-  if (!cat) return notFound();
+  let post: WPPost | null;
 
-  const post: WPPost | null = await getPostBySlug(postSlug);
-  if (!post) return notFound();
+  try {
+    post = await getPostBySlug(postSlug);
+  } catch (error) {
+    console.error(`Error al obtener el post "${postSlug}":`, error);
+    return notFound();
+  }
 
-  const relatedPosts = await getRelatedPostsByCategory({
-    categoryId:   cat.id,
-    excludePostId: post.id,
-    per_page:     3,
-  });
+  if (!post) {
+    return notFound();
+  }
 
   const { categories, tags, authorName } = extractTerms(post);
+  const postCategory = categories.find(c => c.slug === catSlug);
+
+  if (!postCategory) return notFound();
+
+  let relatedPosts: WPPost[] = [];
+
+  try {
+    relatedPosts = await getRelatedPostsByCategory({
+      categoryId: postCategory.id,
+      excludePostId: post.id,
+      per_page: 3,
+    });
+  } catch (error) {
+    console.error(`Error al obtener posts relacionados para la categoría "${postCategory.slug}":`, error);
+  }
+
   const featuredMedia = post._embedded?.['wp:featuredmedia']?.[0];
 
   const crumbs: BreadcrumbItem[] = [
     { label: <HomeIcon width={16} height={16} />, href: '/' },
-    { label: categories[0].name,   href: `/${categories[0].slug}` },
+    { label: postCategory.name,   href: `/${postCategory.slug}` },
     { label: post.title.rendered },
   ];
 
-  // Prepare breadcrumb data for JSON-LD
+  const options: HTMLReactParserOptions = {
+    replace: (domNode) => {
+      if (domNode.type === 'tag' && domNode.name === 'img') {
+        const { src, alt, width, height } = domNode.attribs;
+        return (
+          <Image
+            src={src}
+            alt={alt}
+            width={Number(width) || 800} // Proporciona un valor por defecto
+            height={Number(height) || 400} // Proporciona un valor por defecto
+            className="image-content"
+          />
+        );
+      }
+    },
+  };
+
   const breadcrumbData = {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
@@ -187,9 +229,9 @@ export default async function PostPage({ params }: Props) {
           />
         </div>
 
-        <section className="article__content prose" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-        <CodeHighlighterClient />
-
+        <section className="article__content prose">
+          {parse(post.content.rendered, options)}
+        </section>
         <div className="article__meta-share">
           <Tags tags={tags} />
           <ShareArticle />
@@ -203,7 +245,7 @@ export default async function PostPage({ params }: Props) {
         </aside>
       </article>
 
-      <RelatedPosts posts={relatedPosts} categorySlug={cat.slug} />
+      <RelatedPosts posts={relatedPosts} categorySlug={postCategory.slug} />
     </>
   );
 }

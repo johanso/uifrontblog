@@ -1,4 +1,5 @@
 // src/app/[category]/page.tsx
+
 import { notFound } from 'next/navigation';
 import { WPPost } from '../types/wp';
 import ListPost from '../components/listPost/ListPost';
@@ -11,7 +12,6 @@ export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
 
 interface Params { params: Promise<{ category: string }> }
 
-// Pre-render de todas las categorías
 export async function generateStaticParams() {
   const cats = await getCategories();
   return cats.map(c => ({ category: c.slug }));
@@ -20,9 +20,12 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { category: string };
+  params: Promise<{ category: string }>;
 }): Promise<Metadata> {
-  const cat = await getCategoryBySlug(params.category);
+  // 2. Resolver la promesa con await
+  const { category } = await params;
+  
+  const cat = await getCategoryBySlug(category);
   if (!cat) {
     return {
       title: 'Categoría no encontrada',
@@ -50,6 +53,7 @@ export async function generateMetadata({
   };
 }
 
+// Esta parte ya estaba correcta
 export default async function CategoryPage({ params }: Params) {
   const { category: slug } = await params;
 
