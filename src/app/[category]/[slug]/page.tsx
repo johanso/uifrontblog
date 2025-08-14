@@ -18,6 +18,7 @@ import "./articles.scss"
 import 'highlight.js/styles/grayscale.min.css';
 import "./js-snippets.scss"
 import RelatedPosts from '@/app/components/relatedPosts/RelatedPosts';
+import CodeHighlighter from '@/app/components/codeHighlighter/CodeHighlighter';
 
 export const revalidate = 3600;
 
@@ -232,6 +233,8 @@ export default async function PostPage({ params }: Props) {
         <section className="article__content prose">
           {parse(post.content.rendered, options)}
         </section>
+        <CodeHighlighter />
+
         <div className="article__meta-share">
           <Tags tags={tags} />
           <ShareArticle />
