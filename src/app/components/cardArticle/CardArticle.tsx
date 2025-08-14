@@ -18,7 +18,7 @@ const CardArticle = (
   }: Props
 ) => {
 
-    const { authorName, categories } = extractTerms(post);
+    const { categories } = extractTerms(post);
   
 
   return (

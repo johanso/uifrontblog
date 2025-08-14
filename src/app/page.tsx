@@ -6,7 +6,7 @@ import MenuAsideCategories from './components/menuAsideCategories/MenuAsideCateg
 import { siteConfig } from '@/config/site';
 import './page.scss'
 
-export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
+export const revalidate = 3600;
 
 export function generateMetadata(): Metadata {
   const { siteUrl, title, description } = siteConfig;

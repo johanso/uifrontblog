@@ -8,7 +8,7 @@ import MenuAsideCategories from '../components/menuAsideCategories/MenuAsideCate
 import { siteConfig } from '@/config/site';
 import { Metadata } from 'next';
 
-export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
+export const revalidate = 3600;
 
 interface Params { params: Promise<{ category: string }> }
 

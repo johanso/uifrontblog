@@ -45,7 +45,7 @@ export default function ListPost({ initialPosts, initialPage, perPage, filter }:
               <div className="post-list__meta">
                 {categories.length > 0 && (
                   <p className="post-list__categories">
-                    {categories.map((cat, i) => (
+                    {categories.map((cat) => (
                       <Link
                         key={cat.id}
                         href={`/${cat.slug}`}

@@ -19,7 +19,7 @@ import 'highlight.js/styles/grayscale.min.css';
 import "./js-snippets.scss"
 import RelatedPosts from '@/app/components/relatedPosts/RelatedPosts';
 
-export const revalidate = Number(process.env.NEXT_PUBLIC_REVALIDATE_SECONDS);
+export const revalidate = 3600;
 
 /**
  * En build genera rutas estáticas para cada post

@@ -20,8 +20,8 @@ const TableOfContent = () => {
     // 1. Recopilar todos los H2
     const h2s = Array.from(contentEl.querySelectorAll('h2'));
 
-    const items: Heading[] = h2s.map((h2, i) => {
-      let base = (h2.textContent || '')
+    const items: Heading[] = h2s.map((h2) => {
+      const base = (h2.textContent || '')
         .trim()
         .toLowerCase()
         .replace(/\s+/g, '-')

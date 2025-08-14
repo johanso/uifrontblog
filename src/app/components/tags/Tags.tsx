@@ -1,6 +1,5 @@
 import React from 'react'
 import { WPTerm } from '@/app/types/wp';
-import Link from 'next/link';
 import './tags.scss'
 import { TagsIcon } from '../icons/icons';
 
@@ -10,7 +9,7 @@ const Tags = ({ tags }: { tags: WPTerm[] }) => {
       <span className="tags__icon">
         <TagsIcon width={16} height={16} fill="currentColor" />
       </span>
-      {tags.map(({name, slug}, index) => (
+      {tags.map(({name}, index) => (
         <span key={index} className="tags__tag">
          {name}
         </span>
