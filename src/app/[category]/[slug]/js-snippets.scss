@@ -21,7 +21,7 @@
     }
     pre[class^="language-"] {
       padding-inline: var(--space-3);
-      padding-block: var(--space-1);
+      padding-block: var(--space-2);
     }
   }
   .js-snippet-footer {
@@ -37,7 +37,7 @@
   }
 
   .js-snippet-language {
-    font-size: .725rem;
+    font-size: .7rem;
     background: var(--foreground);
     padding: var(--space-0-5) var(--space-2-5);
     border-radius: var(--border-radius-full);
@@ -51,14 +51,26 @@
     }
   }
 
-  .js-snippet-copy svg {
-    width: var(--space-4);
-    height: var(--space-4);
-  } 
+  
+
+  .js-snippet-copy {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    cursor: pointer;
+    transition: var(--transition-all);
+    svg {
+      width: var(--space-4);
+      height: var(--space-4);
+    } 
+    span {
+      font-size: .7rem;
+    }
+  }
 
   .hljs {
     background: var(--bg-color);
-    padding: var(--space-2);
+    padding: 0;
     font-size: var(--fs-xs);
     font-family: var(--font-fira-code);
     color: var(--color-text-muted);

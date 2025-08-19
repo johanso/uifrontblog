@@ -1,22 +1,21 @@
+// src/app/components/codeHighlighter/CodeHighlighter.tsx
+
 'use client';
 
 import { useEffect } from 'react';
-import hljs from 'highlight.js/lib/core';
-// Importa los lenguajes que necesites:
-import javascript from 'highlight.js/lib/languages/javascript';
-import css from 'highlight.js/lib/languages/css';
-import html from 'highlight.js/lib/languages/xml';
-// registra:
-hljs.registerLanguage('javascript', javascript);
-hljs.registerLanguage('css', css);
-hljs.registerLanguage('html', html);
+import hljs from 'highlight.js';
+import 'highlight.js/styles/atom-one-dark.css'; // O el tema que prefieras
 
 export default function CodeHighlighter() {
   useEffect(() => {
-    // encuentra todos los <pre><code> y aplica el resaltado
-    document.querySelectorAll('pre code').forEach((block) => {
-      hljs.highlightElement(block as HTMLElement);
-    });
+    // ESTA LÍNEA ES PARA DEPURAR
+    console.log('CodeHighlighter está intentando resaltar el código...');
+    
+    try {
+      hljs.highlightAll();
+    } catch (error) {
+      console.error('Error al ejecutar highlight.js:', error);
+    }
   }, []);
 
   return null;

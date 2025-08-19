@@ -2,7 +2,7 @@ import { Metadata } from 'next';
 import Image from 'next/image';
 import Script from 'next/script';
 import { notFound } from 'next/navigation';
-import parse, { HTMLReactParserOptions } from 'html-react-parser';
+import parse, { domToReact, HTMLReactParserOptions, Element, DOMNode } from 'html-react-parser';
 import { getPostBySlug, getPosts, getRelatedPostsByCategory } from '../../lib/wp';
 import { WPPost } from '../../types/wp';
 import MetasArticle from '../../components/metasArticle/MetasArticle';
@@ -19,6 +19,7 @@ import 'highlight.js/styles/grayscale.min.css';
 import "./js-snippets.scss"
 import RelatedPosts from '@/app/components/relatedPosts/RelatedPosts';
 import CodeHighlighter from '@/app/components/codeHighlighter/CodeHighlighter';
+import InteractiveCodeBlock from '@/app/components/interactiveCodeBlock/InteractiveCodeBlock';
 
 export const revalidate = 3600;
 
@@ -153,21 +154,62 @@ export default async function PostPage({ params }: Props) {
   ];
 
   const options: HTMLReactParserOptions = {
-    replace: (domNode) => {
-      if (domNode.type === 'tag' && domNode.name === 'img') {
-        const { src, alt, width, height } = domNode.attribs;
+  replace: (domNode) => {
+    if (domNode instanceof Element && domNode.attribs?.class?.includes('wp-block-js-snippets-code-block')) {
+      
+      // --- 👇 LA LÓGICA CORREGIDA ESTÁ AQUÍ 👇 ---
+
+      // 1. Encontramos el primer 'div' hijo, que es el contenedor intermedio.
+      const innerWrapper = domNode.children.find(
+        (child): child is Element => child instanceof Element && child.name === 'div'
+      );
+      if (!innerWrapper) return; // Si no lo encontramos, no hacemos nada.
+
+      // 2. AHORA, dentro de ese contenedor intermedio, buscamos el <pre>.
+      const preElement = innerWrapper.children.find(
+        (child): child is Element => child instanceof Element && child.name === 'pre'
+      );
+      if (!preElement) return;
+
+      // 3. Dentro del <pre>, buscamos el <code>.
+      const codeElement = preElement.children.find(
+        (child): child is Element => child instanceof Element && child.name === 'code'
+      );
+
+      // 4. Extraemos el texto del código de forma segura.
+      if (codeElement && codeElement.children[0]?.type === 'text') {
+        const codeString = codeElement.children[0].data;
+        const language = preElement.attribs.class?.replace('language-', '') || 'code';
+        
+        // Filtramos los hijos para quitar el header Y el footer originales de WordPress.
+        const contentChildren = innerWrapper.children.filter(
+          child => !(child instanceof Element && 
+            (child.attribs?.class?.includes('js-snippet-header') || child.attribs?.class?.includes('js-snippet-footer')))
+        );
+
         return (
-          <Image
-            src={src}
-            alt={alt}
-            width={Number(width) || 800} // Proporciona un valor por defecto
-            height={Number(height) || 400} // Proporciona un valor por defecto
-            className="image-content"
-          />
+          <InteractiveCodeBlock codeString={codeString} language={language}>
+            {/* Pasamos solo el contenido relevante (el <pre>) */}
+            {domToReact(contentChildren as DOMNode[])}
+          </InteractiveCodeBlock>
         );
       }
-    },
-  };
+    }
+    
+    // Tu lógica para las imágenes <img> se mantiene igual.
+    if (domNode instanceof Element && domNode.name === 'img') {
+      const { src, alt, width, height } = domNode.attribs;
+      return (
+        <Image
+          src={src} alt={alt}
+          width={Number(width) || 800} height={Number(height) || 400}
+          className="image-content"
+        />
+      );
+    }
+  },
+};
+
 
   const breadcrumbData = {
     '@context': 'https://schema.org',
